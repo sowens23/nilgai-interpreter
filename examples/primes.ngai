@@ -1,0 +1,94 @@
+#!./nilgai.lua
+# primes.ngai
+# Spencer Owens
+#
+# Nilgai Example: Sieve of Eratosthenes
+# Finds every prime number up to limit by crossing off multiples of
+# each prime, then prints the primes and how many there are.
+#
+# Demonstrates: arrays, nested loops, booleans, compound conditions,
+# and functions that return values.
+
+
+# Function initSieve
+# Marks every number from 2 to limit as possibly prime.
+def initSieve()
+{
+    k = 2;
+    while (k <= limit)
+    {
+        isPrime[k] = true;
+        k = k + 1;
+    }
+}
+
+
+# Function runSieve
+# For each prime p, crosses off its multiples starting at p*p.
+def runSieve()
+{
+    p = 2;
+    while (p * p <= limit)
+    {
+        if (isPrime[p])
+        {
+            m = p * p;
+            while (m <= limit)
+            {
+                isPrime[m] = false;
+                m = m + p;
+            }
+        }
+        p = p + 1;
+    }
+}
+
+
+# Function printPrimes
+# Outputs all primes on one line, separated by spaces.
+def printPrimes()
+{
+    k = 2;
+    first = true;
+    while (k <= limit)
+    {
+        if (isPrime[k])
+        {
+            if (not first)
+            {
+                output(" ");
+            }
+            output(k);
+            first = false;
+        }
+        k = k + 1;
+    }
+    output(eol);
+}
+
+
+# Function countPrimes
+# Returns the number of primes from 2 to limit.
+def countPrimes()
+{
+    count = 0;
+    k = 2;
+    while (k <= limit)
+    {
+        if (isPrime[k])
+        {
+            count = count + 1;
+        }
+        k = k + 1;
+    }
+    return count;
+}
+
+
+# Main program
+limit = 100;
+initSieve();
+runSieve();
+output("Primes up to ", limit, ":", eol);
+printPrimes();
+output("Total: ", countPrimes(), " primes", eol);
